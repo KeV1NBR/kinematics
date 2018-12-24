@@ -11,12 +11,8 @@
 using namespace std;
 using namespace Eigen;
 
-KM::KM(VectorXd inBASE, VectorXd inTOOL, VectorXd inALPHA, VectorXd inD, VectorXd inA):
-    VectorXd JXdeg = VectorXd(6),
-    VectorXd Position = VectorXd(6),
-    VectorXd ALPHA = VectorXd(6), 
-    VectorXd D = VectorXd(6), 
-    VectorXd A = VectorXd(6)
+KM::KM(VectorXd inBASE, VectorXd inTOOL, VectorXd inALPHA, VectorXd inD, VectorXd inA) : JXdeg(6), Position(6), ALPHA(6), D(6), A(6)
+
 {
 
     this-> ALPHA = inALPHA;
