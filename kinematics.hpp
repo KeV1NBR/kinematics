@@ -6,11 +6,10 @@ public:
     
     // Member functions
     KM(Eigen::VectorXd inBASE, Eigen::VectorXd inTOOL, Eigen::VectorXd inALPHA, Eigen::VectorXd inD, Eigen::VectorXd inA);
-    Eigen::VectorXd forwardKinematics();
-    Eigen::VectorXd inverseKinematics();
+
+    Eigen::VectorXd forwardKinematics(Eigen::VectorXd inJXdeg );
+    Eigen::VectorXd inverseKinematics(Eigen::VectorXd inPosition );
     // Member variables
-    Eigen::VectorXd JXdeg = Eigen::VectorXd(6);
-    Eigen::VectorXd Position = Eigen::VectorXd(6);
 
 protected:
     
@@ -40,6 +39,9 @@ protected:
     void vectorPrint(Eigen::VectorXd vec);
 
 private:
+    
+    Eigen::VectorXd JXdeg = Eigen::VectorXd(6);
+    Eigen::VectorXd Position = Eigen::VectorXd(6);
 
     Eigen::VectorXd ALPHA = Eigen::VectorXd(6); 
     Eigen::VectorXd D = Eigen::VectorXd(6); 

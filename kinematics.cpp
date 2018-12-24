@@ -49,8 +49,10 @@ KM::KM(VectorXd inBASE, VectorXd inTOOL, VectorXd inALPHA, VectorXd inD, VectorX
 
 }
 
-VectorXd KM::forwardKinematics()
+VectorXd KM::forwardKinematics(VectorXd inJXdeg )
 {   
+    JXdeg = inJXdeg;
+
     DH_J1(0) =to_rad(JXdeg(0));        
     DH_J2(0) =to_rad(JXdeg(1));        
     DH_J3(0) =to_rad(JXdeg(2)-90);        
@@ -95,8 +97,10 @@ VectorXd KM::forwardKinematics()
     return Position;
 }
 
-VectorXd KM::inverseKinematics()
+VectorXd KM::inverseKinematics(VectorXd inPosition )
 {
+    Position = inPosition;
+
     Matrix4d R0T_off;
     Matrix4d TOOL_inv;
     Matrix4d R06_rm;
