@@ -1,12 +1,4 @@
-#include <cstdio>
-#include <cstdlib>
-#include <string>
-#include <cmath>
 #include <Eigen/Core>
-#include <iostream>
-
-using namespace std;
-using namespace Eigen;
 
 class KM
 {
@@ -14,49 +6,49 @@ public:
     
     // Member functions
     KM();
-    VectorXd forwardKinematics();
-    VectorXd inverseKinematics();
+    Eigen::VectorXd forwardKinematics();
+    Eigen::VectorXd inverseKinematics();
     // Member variables
-    VectorXd JXdeg = VectorXd(6);
-    VectorXd Position =VectorXd(6);
+    Eigen::VectorXd JXdeg = Eigen::VectorXd(6);
+    Eigen::VectorXd Position = Eigen::VectorXd(6);
 
 protected:
     
-    Vector4d DH_J1;
-    Vector4d DH_J2;
-    Vector4d DH_J3; 
-    Vector4d DH_J4; 
-    Vector4d DH_J5; 
-    Vector4d DH_J6; 
+    Eigen::Vector4d DH_J1;
+    Eigen::Vector4d DH_J2;
+    Eigen::Vector4d DH_J3; 
+    Eigen::Vector4d DH_J4; 
+    Eigen::Vector4d DH_J5; 
+    Eigen::Vector4d DH_J6; 
         
-    Matrix4d J1;
-    Matrix4d J2;
-    Matrix4d J3;
-    Matrix4d J4;
-    Matrix4d J5;
-    Matrix4d J6;
+    Eigen::Matrix4d J1;
+    Eigen::Matrix4d J2;
+    Eigen::Matrix4d J3;
+    Eigen::Matrix4d J4;
+    Eigen::Matrix4d J5;
+    Eigen::Matrix4d J6;
 
-    Matrix4d R01;
-    Matrix4d R02;
-    Matrix4d R03;
-    Matrix4d R04;
-    Matrix4d R05;
-    Matrix4d R06;
-    Matrix4d R0T;
+    Eigen::Matrix4d R01;
+    Eigen::Matrix4d R02;
+    Eigen::Matrix4d R03;
+    Eigen::Matrix4d R04;
+    Eigen::Matrix4d R05;
+    Eigen::Matrix4d R06;
+    Eigen::Matrix4d R0T;
 
-    void matrixPrint(Matrix4d matrix);
-    void vectorPrint(VectorXd vec);
+    void Eigen::matrixPrint(Eigen::Matrix4d matrix);
+    void Eigen::vectorPrint(Eigen::VectorXd vec);
 
 private:
 
-    VectorXd ALPHA = VectorXd(6); 
-    VectorXd D = VectorXd(6); 
-    VectorXd A = VectorXd(6);
+    Eigen::VectorXd ALPHA = Eigen::VectorXd(6); 
+    Eigen::VectorXd D = Eigen::VectorXd(6); 
+    Eigen::VectorXd A = Eigen::VectorXd(6);
 
-    Matrix4d BASE;
-    Matrix4d TOOL;    
-    Matrix4d DH_deal(Vector4d DH_JX);
+    Eigen::Matrix4d BASE;
+    Eigen::Matrix4d TOOL;    
+    Eigen::Matrix4d DH_deal(Eigen::Vector4d DH_JX);
     
-    double to_rad(double degree);
-    double to_degree(double rad);
+    static double to_rad(double degree);
+    static double to_degree(double rad);
 };

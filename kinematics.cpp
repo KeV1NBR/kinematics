@@ -1,17 +1,30 @@
 #include<cstdio>
 #include<cstdlib>
 #include<cmath>
+#include <iostream>
+
 #include <Eigen/Core>
 #include <Eigen/LU>
-#include <iostream>
+
 #include "kinematics.hpp"
 
 using namespace std;
 using namespace Eigen;
 
-KM::KM()
+KM::KM(VectorXd inBASE, VectorXd inTOOL, VectorXd inALPHA, VectorXd inD, VectorXd inA)
 {
-    this-> ALPHA<< -90   , 0  , 90, -90    , 90, 0     ;
+
+    this-> ALPHA = inALPHA;
+    this-> D     = inD;
+    this-> A     = inA;
+    
+    this-> BASE  = DH_deal(inBASE);
+    this->TOOL  << DH_deal(inTOOL);
+
+   // JXdeg    << 0, 0, 0, 0, 0, 0;
+   // Position << 0, 0, 0, 0, 0, 0;
+    
+  /**  this-> ALPHA<< -90   , 0  , 90, -90    , 90, 0     ;
     this-> D    << 169.77, 0  , 0 , -222.63, 0 , -36.25;
     this-> A    << 64.2  , 305, 0 , 0      , 0 , 0     ;
     
@@ -24,9 +37,8 @@ KM::KM()
                    0, 1, 0, 0,
                    0, 0, 1, 0,
                    0, 0, 0, 1;
+**/
 
-   // JXdeg    << 0, 0, 0, 0, 0, 0;
-   // Position << 0, 0, 0, 0, 0, 0;
     
     DH_J1 << to_rad(JXdeg(0)), to_rad(ALPHA(0)), D(0), A(0);
     DH_J2 << to_rad(JXdeg(1)), to_rad(ALPHA(1)), D(1), A(1);
@@ -35,7 +47,7 @@ KM::KM()
     DH_J5 << to_rad(JXdeg(4)), to_rad(ALPHA(4)), D(4), A(4);
     DH_J6 << to_rad(JXdeg(5)), to_rad(ALPHA(5)), D(5), A(5);
 
-  }
+}
 
 VectorXd KM::forwardKinematics()
 {   
