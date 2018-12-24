@@ -11,7 +11,12 @@
 using namespace std;
 using namespace Eigen;
 
-KM::KM(VectorXd inBASE, VectorXd inTOOL, VectorXd inALPHA, VectorXd inD, VectorXd inA)
+KM::KM(VectorXd inBASE, VectorXd inTOOL, VectorXd inALPHA, VectorXd inD, VectorXd inA):
+    VectorXd JXdeg = VectorXd(6),
+    VectorXd Position = VectorXd(6),
+    VectorXd ALPHA = VectorXd(6), 
+    VectorXd D = VectorXd(6), 
+    VectorXd A = VectorXd(6)
 {
 
     this-> ALPHA = inALPHA;
@@ -24,22 +29,6 @@ KM::KM(VectorXd inBASE, VectorXd inTOOL, VectorXd inALPHA, VectorXd inD, VectorX
    // JXdeg    << 0, 0, 0, 0, 0, 0;
    // Position << 0, 0, 0, 0, 0, 0;
     
-  /**  this-> ALPHA<< -90   , 0  , 90, -90    , 90, 0     ;
-    this-> D    << 169.77, 0  , 0 , -222.63, 0 , -36.25;
-    this-> A    << 64.2  , 305, 0 , 0      , 0 , 0     ;
-    
-    this-> BASE << 1, 0, 0, 0,
-                   0, 1, 0, 0,
-                   0, 0, 1, 0,
-                   0, 0, 0, 1;
-
-    this->TOOL  << 1, 0, 0, 0,
-                   0, 1, 0, 0,
-                   0, 0, 1, 0,
-                   0, 0, 0, 1;
-**/
-
-    
     DH_J1 << to_rad(JXdeg(0)), to_rad(ALPHA(0)), D(0), A(0);
     DH_J2 << to_rad(JXdeg(1)), to_rad(ALPHA(1)), D(1), A(1);
     DH_J3 << to_rad(JXdeg(2)), to_rad(ALPHA(2)), D(2), A(2);
@@ -49,7 +38,7 @@ KM::KM(VectorXd inBASE, VectorXd inTOOL, VectorXd inALPHA, VectorXd inD, VectorX
 
 }
 
-VectorXd KM::forwardKinematics(VectorXd inJXdeg )
+VectorXd KM::forwardKinematics(VectorXd inJXdeg)
 {   
     JXdeg = inJXdeg;
 
@@ -97,7 +86,7 @@ VectorXd KM::forwardKinematics(VectorXd inJXdeg )
     return Position;
 }
 
-VectorXd KM::inverseKinematics(VectorXd inPosition )
+VectorXd KM::inverseKinematics(VectorXd inPosition)
 {
     Position = inPosition;
 
