@@ -1,7 +1,0 @@
-/home/kevin/ical/kinematics/build/CMakeFiles/install/strip.dir
-/home/kevin/ical/kinematics/build/CMakeFiles/edit_cache.dir
-/home/kevin/ical/kinematics/build/CMakeFiles/kinematics.dir
-/home/kevin/ical/kinematics/build/CMakeFiles/install.dir
-/home/kevin/ical/kinematics/build/CMakeFiles/rebuild_cache.dir
-/home/kevin/ical/kinematics/build/CMakeFiles/list_install_components.dir
-/home/kevin/ical/kinematics/build/CMakeFiles/install/local.dir
