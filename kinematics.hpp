@@ -5,7 +5,7 @@ class KM
 public:
     
     // Member functions
-    KM();
+    KM(Eigen::VectorXd inBASE, Eigen::VectorXd inTOOL, Eigen::VectorXd inALPHA, Eigen::VectorXd inD, Eigen::VectorXd inA);
     Eigen::VectorXd forwardKinematics();
     Eigen::VectorXd inverseKinematics();
     // Member variables
@@ -36,8 +36,8 @@ protected:
     Eigen::Matrix4d R06;
     Eigen::Matrix4d R0T;
 
-    void Eigen::matrixPrint(Eigen::Matrix4d matrix);
-    void Eigen::vectorPrint(Eigen::VectorXd vec);
+    void matrixPrint(Eigen::Matrix4d matrix);
+    void vectorPrint(Eigen::VectorXd vec);
 
 private:
 
