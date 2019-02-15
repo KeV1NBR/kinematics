@@ -52,12 +52,12 @@ VectorXd KM::forwardKinematics(VectorXd inJXdeg)
     J5 = DH_deal(DH_J5);
     J6 = DH_deal(DH_J6);
 
-    matrixPrint(J1);
-    matrixPrint(J2);
-    matrixPrint(J3);
-    matrixPrint(J4);
-    matrixPrint(J5);
-    matrixPrint(J6);
+    //matrixPrint(J1);
+    //matrixPrint(J2);
+    //matrixPrint(J3);
+    //matrixPrint(J4);
+    //matrixPrint(J5);
+    //matrixPrint(J6);
 
     R01= BASE * J1;
     R02= R01  * J2;
@@ -67,13 +67,13 @@ VectorXd KM::forwardKinematics(VectorXd inJXdeg)
     R06= R05  * J6;
     R0T= R06  * TOOL;
     
-    matrixPrint(R01);
-    matrixPrint(R02);
-    matrixPrint(R03);
-    matrixPrint(R04);
-    matrixPrint(R05);
-    matrixPrint(R06);
-    matrixPrint(R0T);
+    //matrixPrint(R01);
+    //matrixPrint(R02);
+    //matrixPrint(R03);
+    //matrixPrint(R04);
+    //matrixPrint(R05);
+    //matrixPrint(R06);
+    //matrixPrint(R0T);
 
     double p = atan2(sqrt( (R0T(0,2)*R0T(0,2)) + (R0T(1,2)*R0T(1,2))), -R0T(2,2));
  
