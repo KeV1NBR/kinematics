@@ -119,11 +119,11 @@ VectorXd KM::inverseKinematics(VectorXd inPosition)
     O8 = .0001;
   if (O9 == 0)
     O9 = .0001;
-  #quadrant
+  //quadrant
   if (O4>0 && O5>0)
     double V9 = 1;
   else if (O4>0 && O5<0)
-    doubleV9 = 2;
+    double V9 = 2;
   else if (O4<0 && O5<0)
     double V9 = 3;
   else if (O4<0 and O5>0)
