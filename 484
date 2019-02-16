@@ -120,17 +120,14 @@ VectorXd KM::inverseKinematics(VectorXd inPosition)
     if (O9 == 0)
         O9 = .0001;
     //quadrant
-    
-    double V9;
-
     if (O4>0 && O5>0)
-        V9 = 1;
+        double V9 = 1;
     else if (O4>0 && O5<0)
-        V9 = 2;
+        double V9 = 2;
     else if (O4<0 && O5<0)
-        V9 = 3;
+        double V9 = 3;
     else if (O4<0 and O5>0)
-        V9 = 4;
+        double V9 = 4;
     // DH TABLE
     double D13 = to_rad(ALPHA(0));
     double D14 = to_rad(ALPHA(1));
@@ -302,17 +299,14 @@ VectorXd KM::inverseKinematics(VectorXd inPosition)
     double AA69 =(X57*AA60)+(Y57*AA61)+(Z57*AA62)+(AA57*AA63);
     // CALCULATE J1 ANGLE
     double O13 = atan((AA67)/(AA66));
-    
-    double P13;
-
     if (V9 == 1)
-        P13 = to_degree(O13);
+        double P13 = to_degree(O13);
     if (V9 == 2)
-        P13 = to_degree(O13);
+        double P13 = to_degree(O13);
     if (V9 == 3)
-        P13 = -180 + to_degree(O13);
+        double P13 = -180 + to_degree(O13);
     if (V9 == 4)
-        P13 = 180 + to_degree(O13);
+        double P13 = 180 + to_degree(O13);
     // CALCULATE J2 ANGLE	FWD
     double O18 = sqrt(((abs(AA67))*(abs(AA67)))+((abs(AA66))(abs(AA66))));
     double O19 = AA68-E13;
@@ -333,16 +327,13 @@ VectorXd KM::inverseKinematics(VectorXd inPosition)
     double P26 = -180+P25;
     double P27 = P24;
     // J1,J2,J3
-    
-    double Q5, Q6;
-
     double Q4 = P13;
     if (O20<0)
-        Q5 = P26;
+        double Q5 = P26;
     else
-        Q5 = O26;
+        double Q5 = O26;
     if (O20<0)
-        Q6 = P27;
+        double Q6 = P27;
     else
         double Q6 = O27;
     // J1
@@ -480,21 +471,18 @@ VectorXd KM::inverseKinematics(VectorXd inPosition)
         S9 = to_degree(atan2(Y74,-X74))+180;
     else
         double S9 = to_degree(atan2(Y74,-X74))-180;
-    
-    double Q7, Q8, Q9;
-    
     if (V8 == "F")
-        Q8 = R8;
+        double Q8 = R8;
     else
-        Q8 = S8;
+        double Q8 = S8;
     if(Q8>0)
-        Q7 = R7;
+        double Q7 = R7;
     else
-        Q7 = S7;
+        double Q7 = S7;
     if(Q8<0)
-        Q9 = S9;
+        double Q9 = S9;
     else
-        Q9 = R9;
+        double Q9 = R9;
 
 
     JXdeg  <<  Q4, Q5, Q6, Q7, Q8, Q9;
