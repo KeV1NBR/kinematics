@@ -22,8 +22,8 @@ KM::KM(VectorXd inBASE, VectorXd inTOOL, VectorXd inALPHA, VectorXd inD, VectorX
     this-> BASE  = DH_deal(inBASE);
     this->TOOL  << DH_deal(inTOOL);
 
-   // JXdeg    << 0, 0, 0, 0, 0, 0;
-   // Position << 0, 0, 0, 0, 0, 0;
+    JXdeg    << 0.0001, -90, 90, 0.0001, 90, 0.0001;
+    Position << 286.83, 0.000437, 438.52, 0.0001, 179.9999, 0.0001;
     
     DH_J1 << to_rad(JXdeg(0)), to_rad(ALPHA(0)), D(0), A(0);
     DH_J2 << to_rad(JXdeg(1)), to_rad(ALPHA(1)), D(1), A(1);
