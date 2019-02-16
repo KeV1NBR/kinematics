@@ -314,7 +314,7 @@ VectorXd KM::inverseKinematics(VectorXd inPosition)
     if (V9 == 4)
         P13 = 180 + to_degree(O13);
     // CALCULATE J2 ANGLE	FWD
-    double O18 = sqrt(((abs(AA67))*(abs(AA67)))+((abs(AA66))(abs(AA66))));
+    double O18 = sqrt(((abs(AA67))*(abs(AA67)))+((abs(AA66))*(abs(AA66))));
     double O19 = AA68-E13;
     double O20 = O18-F13;
     double O21 = sqrt((O19*O19)+(O20*O20));
@@ -476,10 +476,13 @@ VectorXd KM::inverseKinematics(VectorXd inPosition)
         double R9 = to_degree(atan2(-Y74,X74))+180;
     double S7 = to_degree(atan2(-Z73,-Z72));
     double S8 = to_degree(atan2(-sqrt(1-(Z74*Z74)),Z74));
+    
+    double S9;
+    
     if (Y74 < 0)
         S9 = to_degree(atan2(Y74,-X74))+180;
     else
-        double S9 = to_degree(atan2(Y74,-X74))-180;
+        S9 = to_degree(atan2(Y74,-X74))-180;
     
     double Q7, Q8, Q9;
     
