@@ -90,7 +90,7 @@ VectorXd KM::inverseKinematics(VectorXd inPosition)
     double O7 = inPosition(3);
     double O8 = inPosition(4);
     double O9 = inPosition(5);
-    double V8 = 'F';
+    string V8 = "F";
 
     Position = inPosition;
 
@@ -470,10 +470,13 @@ VectorXd KM::inverseKinematics(VectorXd inPosition)
     // WRIST ORENTATION
     double R7 = to_degree(atan2(Z73,Z72));
     double R8 = to_degree(atan2(+sqrt(1-(Z74*Z74)),Z74));
+    
+    double R9;
+    
     if (Y74 < 0)
-        double R9 = to_degree(atan2(-Y74,X74))-180;
+        R9 = to_degree(atan2(-Y74,X74))-180;
     else
-        double R9 = to_degree(atan2(-Y74,X74))+180;
+        R9 = to_degree(atan2(-Y74,X74))+180;
     double S7 = to_degree(atan2(-Z73,-Z72));
     double S8 = to_degree(atan2(-sqrt(1-(Z74*Z74)),Z74));
     
