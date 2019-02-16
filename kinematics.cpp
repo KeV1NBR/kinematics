@@ -86,6 +86,12 @@ VectorXd KM::inverseKinematics(VectorXd inPosition)
 {
     Position = inPosition;
 
+    for(int i=0;i<6;i++)
+    {
+        if(inPosition(i) == 0)
+            inPosition(i) == 0.0001;
+    }
+
     Matrix4d R0T_off;
     Matrix4d TOOL_inv;
     Matrix4d R06_rm;
