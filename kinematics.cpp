@@ -117,17 +117,33 @@ VectorXd KM::inverseKinematics(VectorXd inPosition)
             
            0, 0, 0, 1;
 
+    matrixPrint(R0T);
+
     R06_rm << -1, 0, 0, 0,
               -sin(to_rad(180))*cos(DH_J6(1)), cos(to_rad(180))*cos(DH_J6(1)), sin(DH_J6(1)), 0,
                sin(to_rad(180))*sin(DH_J6(1)), cos(to_rad(180))*sin(DH_J6(1)), cos(DH_J6(1)), -DH_J6(2),
                0, 0, 0, 1;
 
-
+    
+    matrixPrint(R06_rm);
+        
     R0T_off = BASE * R0T;
+
+
     R0T_off(0,0) = R0T_off(0,0) * -1;
+    matrixPrint(R0T_off);
     TOOL_inv= TOOL.inverse();
+
+    
+    matrixPrint(TOOL_inv);
+
     R06 = R0T_off * TOOL_inv;
+    
+    matrixPrint(R06);
+
     R05 = R06*R06_rm;
+
+    matrixPrint(R05);
 
     if(Position(0)>=0 && Position(1)>=0)
         DH_J1(0) = atan((R05(1,3))/(R05(0,3)));
@@ -182,6 +198,9 @@ VectorXd KM::inverseKinematics(VectorXd inPosition)
     R03 = R02  * J3;
     R03_trans = R03.transpose();
     R36 = R03_trans * R05;
+
+
+    matrixPrint(R36);
 
     DH_J5(0) = atan2( sqrt(1-(R36(2,2)*R36(2,2))), R36(2,2));//
     if(JXdeg(4)>=0 && DH_J5(0)>=0)
