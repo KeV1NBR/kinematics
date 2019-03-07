@@ -1,19 +1,21 @@
 cmake_minimum_required(VERSION 2.8)
 
+# Disable in-source builds to prevent source tree corruption.
 if(" ${CMAKE_SOURCE_DIR}" STREQUAL " ${CMAKE_BINARY_DIR}")
-  message(FATAL_ERROR "
-FATAL: In-source builds are not allowed.
-       You should create a separate directory for build files.
-")
+	message(FATAL_ERROR "\nFATAL: In-source builds are not allowed.\n"
+		"You should create a separate directory for build files."
+		)
 endif()
 
-set(PROJECT_NAME kinematics)
-set(PROJECT_LANGUAGE CXX)
+# Set variables
+set(PROJECT_NAME AR2_lib)
+set(PROJECT_LANGUAGE C CXX)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
-set(CMAKE_CXX_FLAGS_DEBUG "-g3")
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} -O3")
-set(CMAKE_CXX_STANDARD 14)
+# Environment variables
+set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/install" CACHE PATH "Installation directory")
+set(CMAKE_CXX_FLAGS "-std=c++11 -rdynamic -g")
+option(BUILD_TEST "Enable building test" OFF)
+option(BUILD_SHARED_LIBS "Build shared library" OFF)
 
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "Build configure" FORCE)
 if(DEFINED CMAKE_BUILD_TYPE)
@@ -23,35 +25,33 @@ if(NOT CMAKE_BUILD_TYPE)
 	set(CMAKE_BUILD_TYPE Release)
 endif()
 
+# Let ycm can catch compile commands.
+set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
+
+# Dependences paths
+set(DEPS_PATHS
+    ${CMAKE_CURRENT_SOURCE_DIR}/deps/kinematics
+	)
+
+# Library paths
+set(LIB_PATHS
+	${CMAKE_CURRENT_SOURCE_DIR}/lib/
+	)
+
+# Utility paths
+set(UTIL_PATHS
+	${CMAKE_CURRENT_SOURCE_DIR}/util/take_tools
+	)
+
+if(${BUILD_TEST})
+	set(UTIL_PATHS ${UTIL_PATHS} ${CMAKE_CURRENT_SOURCE_DIR}/test)
+endif()
+
+# Set project
 project(${PROJECT_NAME} ${PROJECT_LANGUAGE})
 
-#if(CMAKE_BUILD_TYPE MATCHES Debug)
-#	add_definitions(-DDEBUG)
-#endif()
-
-include_directories(${CMAKE_CURRENT_SOURCE_DIR})
-
-file(GLOB PROJECT_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
-file(GLOB PROJECT_HEADERS
-	${CMAKE_CURRENT_SOURCE_DIR}/*.h
-	${CMAKE_CURRENT_SOURCE_DIR}/*.hpp
-	)
-
-add_library(${PROJECT_NAME} STATIC ${PROJECT_SRCS})
-
-set_target_properties(${PROJECT_NAME}
-	PROPERTIES
-	OUTPUT_NAME ${PROJECT_NAME}
-	PREFIX 		"lib"
-)
-
-install(TARGETS ${PROJECT_NAME}
-	RUNTIME DESTINATION "${CMAKE_INSTALL_PREFIX}/bin"
-	ARCHIVE DESTINATION "${CMAKE_INSTALL_PREFIX}/lib"
-	LIBRARY DESTINATION "${CMAKE_INSTALL_PREFIX}/lib"
-	PUBLIC_HEADER DESTINATION "${CMAKE_INSTALL_PREFIX}/include"
-	)
-install(FILES ${PROJECT_HEADERS}
-	DESTINATION "${CMAKE_INSTALL_PREFIX}/include"
-	)
+# Include cmake files
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/deps.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/lib.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/util.cmake)
 
