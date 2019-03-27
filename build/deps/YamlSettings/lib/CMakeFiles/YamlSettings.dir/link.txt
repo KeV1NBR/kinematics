@@ -1,0 +1,2 @@
+/usr/bin/ar qc libYamlSettings.a  CMakeFiles/YamlSettings.dir/YamlSettings.cpp.o
+/usr/bin/ranlib libYamlSettings.a

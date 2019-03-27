@@ -30,17 +30,12 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 
 # Dependences paths
 set(DEPS_PATHS
-    ${CMAKE_CURRENT_SOURCE_DIR}/deps/kinematics
+    ${CMAKE_CURRENT_SOURCE_DIR}/deps/YamlSettings/lib
 	)
 
 # Library paths
 set(LIB_PATHS
 	${CMAKE_CURRENT_SOURCE_DIR}/lib/
-	)
-
-# Utility paths
-set(UTIL_PATHS
-	${CMAKE_CURRENT_SOURCE_DIR}/util/take_tools
 	)
 
 if(${BUILD_TEST})

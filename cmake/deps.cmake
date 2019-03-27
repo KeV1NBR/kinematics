@@ -11,20 +11,17 @@ include_directories(${DEPS_PATHS})
 
 # Find other dependences
 set(OpenCV_STATIC OFF CACHE BOOL "Using OpenCV static linking library")
-#find_package(OpenCV REQUIRED)
-find_package(OpenCV)
-include_directories(${OpenCV_INCLUDE_DIRS})
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
-#find_package(Serialport REQUIRED)
-find_package(Serialport)
-include_directories(${SERIALPORT_INCLUDE_DIRS})
 
 # Find Eigen
 find_package(Eigen3 REQUIRED)
 include_directories(${EIGEN3_INCLUDE_DIR})
 
+#Find YAML
+find_package(yaml-cpp REQUIRED)
+include_directories(${YAML_CPP_INCLUDE_DIRS})
 
 # Add subdirectory
 foreach(DEPS_PATH ${DEPS_PATHS})

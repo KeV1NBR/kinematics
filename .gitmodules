@@ -1,0 +1,3 @@
+[submodule "deps/YamlSettings"]
+	path = deps/YamlSettings
+	url = git@140.127.205.188:e8035669/YamlSettings.git

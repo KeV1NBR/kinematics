@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/ical/kevin/library/kinematics/deps/YamlSettings/lib/YamlSettings.cpp
+YamlSettings.h
+/home/ical/kevin/library/kinematics/deps/YamlSettings/lib/YamlSettings.h
+iostream
+-
+string
+-
+
+/home/ical/kevin/library/kinematics/deps/YamlSettings/lib/YamlSettings.h
+yaml-cpp/yaml.h
+-
+

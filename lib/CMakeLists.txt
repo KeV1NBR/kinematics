@@ -1,55 +1,50 @@
 cmake_minimum_required(VERSION 2.8)
 
-# Set variables
-set(PROJECT_NAME AR2_lib)
-set(PROJECT_LANGUAGE C CXX)
-set(PROJECT_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/serial.hpp AR2.hpp )
-set(PROJECT_DEPS gcc stdc++)
+if(" ${CMAKE_SOURCE_DIR}" STREQUAL " ${CMAKE_BINARY_DIR}")
+  message(FATAL_ERROR "
+FATAL: In-source builds are not allowed.
+       You should create a separate directory for build files.
+")
+endif()
 
-# Compile setting
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall")
-set(CMAKE_C_FLAGS_RELEASE "-O3")
+set(PROJECT_NAME kinematics)
+set(PROJECT_LANGUAGE CXX)
+
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
-set(CMAKE_CXX_FLAGS_RELEASE "-O3")
+set(CMAKE_CXX_FLAGS_DEBUG "-g3")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} -O3")
+set(CMAKE_CXX_STANDARD 14)
 
-# Set default build option
+set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "Build configure" FORCE)
+if(DEFINED CMAKE_BUILD_TYPE)
+	set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS ${CMAKE_CONFIGURATION_TYPES})
+endif()
 if(NOT CMAKE_BUILD_TYPE)
 	set(CMAKE_BUILD_TYPE Release)
 endif()
 
-if(NOT BUILD_SHARED_LIBS)
-	set(BUILD_SHARED_LIBS OFF)
-endif()
-
-# Set project
 project(${PROJECT_NAME} ${PROJECT_LANGUAGE})
 
-# Add definition
-if(CMAKE_BUILD_TYPE MATCHES Debug)
-	add_definitions(-DDEBUG)
-endif()
+#if(CMAKE_BUILD_TYPE MATCHES Debug)
+#	add_definitions(-DDEBUG)
+#endif()
 
-# Include directory
-include_directories(${CMAKE_CURRENT_SOURCE_DIR} kinematics)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
-# Set file list
-file(GLOB PROJECT_SRCS
-	${CMAKE_CURRENT_SOURCE_DIR}/*.c
-	${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
+file(GLOB PROJECT_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
+file(GLOB PROJECT_HEADERS
+	${CMAKE_CURRENT_SOURCE_DIR}/*.h
+	${CMAKE_CURRENT_SOURCE_DIR}/*.hpp
 	)
 
-# Build library
-add_library(${PROJECT_NAME} ${PROJECT_SRCS})
-set_target_properties(${PROJECT_NAME} PROPERTIES
+add_library(${PROJECT_NAME} STATIC ${PROJECT_SRCS})
+
+set_target_properties(${PROJECT_NAME}
+	PROPERTIES
 	OUTPUT_NAME ${PROJECT_NAME}
-	PREFIX "lib"
-	)
+	PREFIX 		"lib"
+)
 
-if(${BUILD_SHARED_LIBS})
-	target_link_libraries(${PROJECT_NAME} ${PROJECT_DEPS})
-endif()
-
-# Install
 install(TARGETS ${PROJECT_NAME}
 	RUNTIME DESTINATION "${CMAKE_INSTALL_PREFIX}/bin"
 	ARCHIVE DESTINATION "${CMAKE_INSTALL_PREFIX}/lib"
@@ -59,3 +54,4 @@ install(TARGETS ${PROJECT_NAME}
 install(FILES ${PROJECT_HEADERS}
 	DESTINATION "${CMAKE_INSTALL_PREFIX}/include"
 	)
+
