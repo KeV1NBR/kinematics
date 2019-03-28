@@ -51,7 +51,8 @@ private:
     Eigen::Matrix4d BASE;
     Eigen::Matrix4d TOOL;    
     Eigen::Matrix4d DH_deal(Eigen::Vector4d DH_JX);
-    
+    Eigen::Matrix4d CART_deal(Eigen::VectorXd CART);
+
     static double to_rad(double degree);
     static double to_degree(double rad);
     static double atan2_c (double a, double b);

@@ -19,8 +19,8 @@ KM::KM(VectorXd inBASE, VectorXd inTOOL, VectorXd inALPHA, VectorXd inD, VectorX
     this-> D     = inD;
     this-> A     = inA;
     
-    this-> BASE  = DH_deal(inBASE);
-    this->TOOL  << DH_deal(inTOOL);
+    this-> BASE  = CART_deal(inBASE);
+    this->TOOL  << CART_deal(inTOOL);
 
     JXdeg    << 0.0001, -90, 90, 0.0001, 90, 0.0001;
     Position << 286.83, 0.000437, 438.52, 0.0001, 179.9999, 0.0001;
@@ -89,7 +89,7 @@ VectorXd KM::inverseKinematics(VectorXd inPosition)
     for(int i=0;i<6;i++)
     {
         if(inPosition(i) == 0)
-            inPosition(i) == 0.0001;
+            inPosition(i) = 0.0001;
     }
 
     Matrix4d R0T_off;
@@ -175,11 +175,17 @@ VectorXd KM::inverseKinematics(VectorXd inPosition)
     //matrixPrint(R36);
 
     DH_J5(0) = atan2_c( sqrt(1-(R36(2,2)*R36(2,2))), R36(2,2));//
+    if(DH_J5(0)>M_PI)
+        DH_J5(0) = DH_J5(0) - (2 * M_PI );
+    if(DH_J5(0)< (-1*M_PI))
+        DH_J5(0) = DH_J5(0) + (2 * M_PI );
 
-    DH_J4(0) = atan2_c(R36(1,2), R36(0,2)); //
-    DH_J6(0) = atan2_c(-R36(2,1),R36(2,0))-to_rad(180);//
+
+    DH_J4(0) = atan2_c(R36(1,2)/DH_J5(0), R36(0,2)/DH_J5(0)); //
+
+    DH_J6(0) = atan2_c(R36(2,1)/DH_J5(0),-R36(2,0)/DH_J5(0));//
     
-    JXdeg  <<  to_degree(DH_J1(0)),to_degree(DH_J2(0)), to_degree(DH_J3(0)+to_rad(90)), to_degree(DH_J4(0)), to_degree(DH_J5(0)), to_degree(DH_J6(0));
+    JXdeg  <<  to_degree(DH_J1(0)),to_degree(DH_J2(0)), to_degree(DH_J3(0)), to_degree(DH_J4(0)), to_degree(DH_J5(0)), to_degree(DH_J6(0));
     return JXdeg;
 }
 
@@ -202,6 +208,28 @@ Matrix4d KM::DH_deal(Vector4d DH_JX)
                    0            , 0                           , 0                           , 1                     ;
 
     return JX;
+}
+
+Matrix4d KM:: CART_deal(VectorXd CART)
+{
+     Matrix4d JX; 
+             JX << cos(to_rad(CART(5))) * cos(to_rad(CART(4))), 
+                   sin(to_rad(CART(5))) * cos(to_rad(CART(3))) + cos(to_rad(CART(5))) * sin(to_rad(CART(4))) * sin(to_rad(3)),
+                   sin(to_rad(CART(5))) * sin(to_rad(CART(3))) + cos(to_rad(CART(5)))*sin(to_rad(CART(4)))*cos(to_rad(CART(3))),
+                   CART(0),
+                   
+                   sin(to_rad(CART(5)))*cos(to_rad(CART(4))),
+                   cos(to_rad(CART(5)))*cos(to_rad(3)) + sin(to_rad(CART(5)))*sin(to_rad(CART(4)))*sin(to_rad(CART(3))),
+                   cos(to_rad(CART(5)))*sin(to_rad(CART(3))) + sin(to_rad(CART(5)))*sin(to_rad(CART(4)))*cos(to_rad(CART(3))),
+                   CART(1),
+                   
+                   sin(to_rad(CART(4))),
+                   cos(to_rad(CART(4)))*sin(to_rad(CART(3))),
+                   cos(to_rad(CART(4)))*cos(to_rad(CART(3))),
+                   CART(2),
+                   0,0,0,1;  
+    return JX;       
+
 }
 
 void KM::matrixPrint(Matrix4d matrix)
