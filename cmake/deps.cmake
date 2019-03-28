@@ -18,11 +18,6 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 # Find Eigen
 find_package(Eigen3 REQUIRED)
 include_directories(${EIGEN3_INCLUDE_DIR})
-
-#Find YAML
-find_package(yaml-cpp REQUIRED)
-include_directories(${YAML_CPP_INCLUDE_DIRS})
-
 # Add subdirectory
 foreach(DEPS_PATH ${DEPS_PATHS})
 	add_subdirectory(${DEPS_PATH})
