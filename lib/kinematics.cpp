@@ -75,9 +75,9 @@ VectorXd KM::forwardKinematics(VectorXd inJXdeg)
     //matrixPrint(R06);
     //matrixPrint(R0T);
 
-    double p = atan2_c(sqrt( (R0T(0,2)*R0T(0,2)) + (R0T(1,2)*R0T(1,2))), -R0T(2,2));
+    double p = atan2(sqrt( (R0T(0,2)*R0T(0,2)) + (R0T(1,2)*R0T(1,2))), -R0T(2,2));
  
-             Position  <<  R0T(0,3), R0T(1,3), R0T(2,3), to_degree(atan2_c(R0T(2,0)/p , R0T(2,1)/p)), to_degree(p), to_degree(atan2_c(R0T(0,2)/p , R0T(1,2)/p)); 
+             Position  <<  R0T(0,3), R0T(1,3), R0T(2,3), to_degree(atan2(R0T(2,0)/p , R0T(2,1)/p)), to_degree(p), to_degree(atan2(R0T(0,2)/p , R0T(1,2)/p)); 
   
     return Position;
 }
@@ -144,13 +144,13 @@ VectorXd KM::inverseKinematics(VectorXd inPosition)
 
     //matrixPrint(R05);
 
-    DH_J1(0) = atan2_c((R05(1,3)),(R05(0,3)));
+    DH_J1(0) = atan2((R05(1,3)),(R05(0,3)));
 
     J23_FWD(0)= sqrt((abs(R05(1, 3)) * abs(R05(1, 3))) + abs(R05(0, 3)) * abs(R05(0, 3))); 
     J23_FWD(1)= R05(2, 3) - DH_J1(2);
     J23_FWD(2)= J23_FWD(0) - DH_J1(3); 
     J23_FWD(3)= sqrt((J23_FWD(1) * J23_FWD(1)) + (J23_FWD(2) * J23_FWD(2)));
-    J23_FWD(4)= atan2_c(J23_FWD(1), J23_FWD(2)); 
+    J23_FWD(4)= atan2(J23_FWD(1), J23_FWD(2)); 
     J23_FWD(5)= acos(((DH_J2(3) * DH_J2(3)) + (J23_FWD(3) * J23_FWD(3)) - (abs(DH_J4(2)) * abs(DH_J4(2)))) /(2 * DH_J2(3) * J23_FWD(3)));
     J23_FWD(6)= acos(((abs(DH_J4(2))) * (abs(DH_J4(2))) + (DH_J2(3) * DH_J2(3)) - (J23_FWD(3) * J23_FWD(3))) / 
             (2 * abs(DH_J4(2)) * (DH_J2(3))));
@@ -174,17 +174,28 @@ VectorXd KM::inverseKinematics(VectorXd inPosition)
 
     //matrixPrint(R36);
 
-    DH_J5(0) = atan2_c( sqrt(1-(R36(2,2)*R36(2,2))), R36(2,2));//
+    DH_J5(0) = atan2( sqrt(1-(R36(2,2)*R36(2,2))), R36(2,2));//
     if(DH_J5(0)>M_PI)
         DH_J5(0) = DH_J5(0) - (2 * M_PI );
-    if(DH_J5(0)< (-1*M_PI))
+    else if(DH_J5(0)< (-1*M_PI))
         DH_J5(0) = DH_J5(0) + (2 * M_PI );
 
+    if(DH_J5(0)>=-0.0001 && DH_J5(0)<=0.0001)
+        DH_J5(0) = 0.0001;
 
-    DH_J4(0) = atan2_c(R36(1,2)/DH_J5(0), R36(0,2)/DH_J5(0)); //
 
-    DH_J6(0) = atan2_c(R36(2,1)/DH_J5(0),-R36(2,0)/DH_J5(0));//
-    
+    DH_J4(0) = atan2(R36(1,2)/sin(to_rad(DH_J5(0))), R36(0,2)/sin(to_rad(DH_J5(0)))); //
+    if(DH_J4(0)>M_PI)
+        DH_J4(0) = DH_J4(0) - (2 * M_PI );
+    else if(DH_J4(0)< (-1*M_PI))
+        DH_J4(0) = DH_J4(0) + (2 * M_PI );
+
+    DH_J6(0) = atan2(R36(2,1)/DH_J5(0),-R36(2,0)/DH_J5(0));//
+    if(DH_J6(0)>M_PI)
+        DH_J6(0) = DH_J6(0) - (2 * M_PI );
+    else if(DH_J6(0)< (-1*M_PI))
+        DH_J6(0) = DH_J6(0) + (2 * M_PI );
+
     JXdeg  <<  to_degree(DH_J1(0)),to_degree(DH_J2(0)), to_degree(DH_J3(0)), to_degree(DH_J4(0)), to_degree(DH_J5(0)), to_degree(DH_J6(0));
     return JXdeg;
 }
@@ -256,10 +267,4 @@ void KM:: vectorPrint(VectorXd vec)
     printf("\n\n");
 
 }
-double KM:: atan2_c(double a, double b)
-{
-    if(b == 0.0)
-        return 0;
-    else
-        return atan2(a,b);
-}
+

@@ -55,5 +55,4 @@ private:
 
     static double to_rad(double degree);
     static double to_degree(double rad);
-    static double atan2_c (double a, double b);
 };
