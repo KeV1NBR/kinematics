@@ -130,7 +130,6 @@ VectorXd KM::inverseKinematics(VectorXd inPosition)
     R0T_off = BASE * R0T;
 
 
-    R0T_off(0,0) = R0T_off(0,0) * -1;
     matrixPrint(R0T_off);
     TOOL_inv= TOOL.inverse();
     
@@ -190,7 +189,8 @@ VectorXd KM::inverseKinematics(VectorXd inPosition)
     else if(DH_J4(0)< (-1*M_PI))
         DH_J4(0) = DH_J4(0) + (2 * M_PI );
 
-    DH_J6(0) = atan2(R36(2,1)/DH_J5(0),-R36(2,0)/DH_J5(0));//
+    DH_J6(0) = atan2(R36(2,1)/sin(DH_J5(0)),-R36(2,0)/sin(DH_J5(0)));//
+    cout << "hahahahahahahahahaha:" <<  R36 << endl;
     if(DH_J6(0)>M_PI)
         DH_J6(0) = DH_J6(0) - (2 * M_PI );
     else if(DH_J6(0)< (-1*M_PI))

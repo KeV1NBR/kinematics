@@ -30,7 +30,6 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 
 # Dependences paths
 set(DEPS_PATHS
-    ${CMAKE_CURRENT_SOURCE_DIR}/deps/YamlSettings/lib
 	)
 
 # Library paths
