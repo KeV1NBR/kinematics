@@ -1,6 +1,6 @@
 #pragma once
 #include <Eigen/Core>
-
+ #include <vector> 
 class KM
 {
 public:
@@ -10,7 +10,11 @@ public:
 
     Eigen::VectorXd forwardKinematics(Eigen::VectorXd inJXdeg);
     Eigen::VectorXd inverseKinematics(Eigen::VectorXd inPosition);
-    // Member variables
+
+
+void forwardKinematics(std::vector<Eigen::VectorXd> inJXdeg, std::vector<Eigen::VectorXd>& outPosition);
+
+void inverseKinematics(std::vector<Eigen::VectorXd> inPosition, std::vector<Eigen::VectorXd>& outJXdeg);
 
 protected:
     
