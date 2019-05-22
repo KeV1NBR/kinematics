@@ -11,8 +11,6 @@
 using namespace std;
 using namespace Eigen;
 
-
-
 KM::KM(VectorXd inBASE, VectorXd inTOOL, VectorXd inALPHA, VectorXd inD, VectorXd inA) : JXdeg(6), Position(6), ALPHA(6), D(6), A(6)
 
 {
@@ -22,7 +20,7 @@ KM::KM(VectorXd inBASE, VectorXd inTOOL, VectorXd inALPHA, VectorXd inD, VectorX
     this-> A     = inA;
     
     this-> BASE  = CART_deal(inBASE);
-    this->TOOL  << CART_deal(inTOOL);
+    this-> TOOL  << CART_deal(inTOOL);
 
     JXdeg    << 0.0001, -90, 90, 0.0001, 90, 0.0001;
     Position << 286.83, 0.000437, 438.52, 0.0001, 179.9999, 0.0001;
@@ -93,9 +91,9 @@ VectorXd KM::forwardKinematics(VectorXd inJXdeg)
     //matrixPrint(R06);
     //matrixPrint(R0T);
 
-    double p = atan2(sqrt( (R0T(0,2)*R0T(0,2)) + (R0T(1,2)*R0T(1,2))), -R0T(2,2));
+    double p = atan2(-R0T(2,0), sqrt((R0T(1,0)*R0T(1,0)) + (R0T(0,0)*R0T(0,0))));
  
-             Position  <<  R0T(0,3), R0T(1,3), R0T(2,3), to_degree(atan2(R0T(2,0)/p , R0T(2,1)/p)), to_degree(p), to_degree(atan2(R0T(0,2)/p , R0T(1,2)/p)); 
+             Position  <<  R0T(0,3), R0T(1,3), R0T(2,3), to_degree(atan2(R0T(2,1)/cos(p) , R0T(2,2)/cos(p))), to_degree(p), to_degree(atan2(R0T(1,0)/cos(p), R0T(0,0)/cos(p))); 
   
     return Position;
 }
